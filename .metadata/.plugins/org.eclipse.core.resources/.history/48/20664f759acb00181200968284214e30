@@ -1,0 +1,34 @@
+package array_test;
+
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Spliterator;
+
+public class CharCounter {
+	public static boolean have(char[] cha ,char c) {
+		for (int i=0;i<cha.length;i++) {
+			if(cha[i]==c) return true;
+		}
+		return false;
+		
+	}
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+		String temp = scanner.nextLine();
+		//×ÖÄ¸µÄANSCIÂë
+		for(int i=65;i<123;i++) {
+			int num=0;
+			for(int j = 0; j<temp.length();j++) {
+				if((char)i==temp.charAt(j)) {
+					num++;
+				}
+		}if(num!=0) {
+			System.out.println((char)i+"ÓĞ"+num+"¸ö");
+		}
+			
+			
+		}
+		
+}
+}

@@ -1,0 +1,13 @@
+package array_test;
+
+public class ArrayTester {
+	public static void main(String[] args) {
+		double[][] s1 = { { 1, 2, 3 }, { 3, 6, 9 }, { 4, 5, 6 } };
+		double[][] s2 = { { 9, 8, 7 }, { 6, 5, 4 }, { 3, 2, 1 } };
+		Matrix ma1 = new Matrix(s1);
+		Matrix ma2 = new Matrix(s2);
+		System.out.println(ma1.transpose());
+		System.out.println(ma1.getrows(0));
+		System.out.println(ma1.getcols(0));
+	}
+}

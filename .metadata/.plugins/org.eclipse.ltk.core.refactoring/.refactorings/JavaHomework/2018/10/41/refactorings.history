@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;num&apos; in &apos;array_test.CharCounter.main(...)&apos; to &apos;charnum&apos;&#x0D;&#x0A;- Original project: &apos;JavaHomework&apos;&#x0D;&#x0A;- Original element: &apos;array_test.CharCounter.main(String[]).num&apos;&#x0D;&#x0A;- Renamed element: &apos;num&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename local variable &apos;num&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;array_test{CharCounter.java[CharCounter~main~\[QString;@num!481!490!485!487!I!0!false" name="charnum" references="true" stamp="1539072350254" version="1.0"/>
+</session>

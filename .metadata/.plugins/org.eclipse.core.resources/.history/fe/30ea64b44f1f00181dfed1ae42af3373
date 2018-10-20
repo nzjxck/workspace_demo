@@ -1,0 +1,19 @@
+/**
+ * 递归方法的练习（斐波那契数列）
+ */
+
+package chap03;
+import java.util.*;
+public class FangFa04 {
+	 static long DiGui(int n){
+		if(n==1||n==2){
+			return 1;
+		}
+		return DiGui(n-1)+DiGui(n-2);
+	}
+	public static void main(String[] args) {
+		for(int n=1;n<=6;n++){
+		System.out.println(FangFa04.DiGui(n));
+	}
+	}
+}

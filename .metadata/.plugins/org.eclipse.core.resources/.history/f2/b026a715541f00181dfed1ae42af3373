@@ -1,0 +1,18 @@
+package chap03;
+/**
+ * 构造方法
+ * @author MXJ
+ *
+ */
+public class FangFa05 {
+	private String name;
+	private int age;
+	public void say(){
+		System.out.println("我叫"+name+"我今年"+age+"岁了");
+	}
+	public static void main(String[] args) {
+		FangFa05 people =new FangFa05();
+		people.say("张三",500);
+	}
+
+}

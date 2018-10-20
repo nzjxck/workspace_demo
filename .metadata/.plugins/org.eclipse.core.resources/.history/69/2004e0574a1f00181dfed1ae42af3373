@@ -1,0 +1,15 @@
+package chap03;
+
+public class FangFa02 {
+   void fuc(){
+	   System.out.println("这是一个普通方法");
+   }
+   static void fuc2(){
+	   System.out.println("这是一个静态方法");
+   }
+   public static void main(String[] args) {
+	FangFa02 fangfa=new FangFa02();
+	fangfa.fuc();//对象.方法  调用普通方法
+	FangFa02.fuc2();//类名.方法 调用静态方法（普通方法的调用同样适用 不过一般会有警告）
+}
+}

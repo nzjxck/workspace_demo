@@ -1,0 +1,389 @@
+package view;
+
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.Vector;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+
+import dao.BookManageDao;
+import model.BookInfo;
+import util.DbUtil;
+import util.StringUtil;
+
+public class InsAndDelBookInterFrm extends JInternalFrame {
+	private JTable BookInfoTable;
+	private DbUtil dbutil=new DbUtil();
+	private BookManageDao bookmanagedao=new BookManageDao();
+	private JTextField IAD_BookNameTxt;
+	private JTextField idTxt;
+	private JTextField bookname_dTxt;
+	private JTextField authorTxt;
+	private JTextField priceTxt;
+	private JTextField storageTxt;
+	private JTextField typeidTxt;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					InsAndDelBookInterFrm frame = new InsAndDelBookInterFrm();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public InsAndDelBookInterFrm() {
+		getContentPane().setFont(new Font("SimSun", Font.PLAIN, 15));
+		setTitle("\u67E5\u8BE2\u4E0E\u5220\u9664\u56FE\u4E66");
+		setIconifiable(true);
+		setClosable(true);
+		setBounds(100, 100, 906, 731);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		
+		JLabel lblNewLabel = new JLabel("\u56FE\u4E66\u540D\u79F0\uFF1A");
+		lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 17));
+		
+		IAD_BookNameTxt = new JTextField();
+		IAD_BookNameTxt.setColumns(10);
+		
+		JButton btnNewButton = new JButton("\u67E5\u8BE2");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BookSearchActionPerformed(e);
+			}
+		});
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new TitledBorder(null, "\u8868\u5355\u64CD\u4F5C", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		GroupLayout groupLayout = new GroupLayout(getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(129)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblNewLabel)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(IAD_BookNameTxt, GroupLayout.PREFERRED_SIZE, 417, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
+							.addGap(50))
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 736, Short.MAX_VALUE)
+								.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 718, Short.MAX_VALUE))
+							.addContainerGap())))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(61)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblNewLabel)
+						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+							.addComponent(IAD_BookNameTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnNewButton)))
+					.addGap(28)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
+					.addGap(31)
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 321, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(55, Short.MAX_VALUE))
+		);
+		
+		JLabel lblId = new JLabel("ID:");
+		lblId.setFont(new Font("宋体", Font.PLAIN, 17));
+		
+		idTxt = new JTextField();
+		idTxt.setEditable(false);
+		idTxt.setColumns(10);
+		
+		JLabel lblNewLabel_1 = new JLabel("\u4E66\u540D:");
+		lblNewLabel_1.setFont(new Font("宋体", Font.PLAIN, 17));
+		
+		bookname_dTxt = new JTextField();
+		bookname_dTxt.setColumns(10);
+		
+		JLabel lblNewLabel_2 = new JLabel("\u4F5C\u8005:");
+		lblNewLabel_2.setFont(new Font("宋体", Font.PLAIN, 17));
+		
+		authorTxt = new JTextField();
+		authorTxt.setColumns(10);
+		
+		JLabel label = new JLabel("\u4EF7\u683C:");
+		label.setFont(new Font("宋体", Font.PLAIN, 17));
+		
+		priceTxt = new JTextField();
+		priceTxt.setColumns(10);
+		
+		JLabel lblNewLabel_3 = new JLabel("\u5E93\u5B58\u6570\u91CF:");
+		lblNewLabel_3.setFont(new Font("宋体", Font.PLAIN, 17));
+		
+		storageTxt = new JTextField();
+		storageTxt.setColumns(10);
+		
+		JLabel lblNewLabel_4 = new JLabel("\u7C7B\u578BID:");
+		
+		typeidTxt = new JTextField();
+		typeidTxt.setColumns(10);
+		
+		JButton btnNewButton_1 = new JButton("\u5220\u9664");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BookInfoDeleteActionPerformed(e);
+			}
+		});
+		btnNewButton_1.setFont(new Font("宋体", Font.PLAIN, 17));
+		
+		JButton btnNewButton_2 = new JButton("\u4FEE\u6539");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BookInfoUpdateActionPerformed(e);
+			}
+		});
+		btnNewButton_2.setFont(new Font("宋体", Font.PLAIN, 17));
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(lblId)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(idTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(149)
+							.addComponent(lblNewLabel_4)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(typeidTxt, GroupLayout.PREFERRED_SIZE, 334, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+								.addGroup(gl_panel.createSequentialGroup()
+									.addComponent(label)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(priceTxt))
+								.addGroup(gl_panel.createSequentialGroup()
+									.addComponent(lblNewLabel_1)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(bookname_dTxt, GroupLayout.PREFERRED_SIZE, 262, GroupLayout.PREFERRED_SIZE)))
+							.addGap(18)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+								.addGroup(gl_panel.createSequentialGroup()
+									.addComponent(lblNewLabel_2)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(authorTxt, GroupLayout.PREFERRED_SIZE, 301, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_panel.createSequentialGroup()
+									.addComponent(lblNewLabel_3)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(storageTxt)))))
+					.addContainerGap(26, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+					.addGap(34)
+					.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 231, Short.MAX_VALUE)
+					.addComponent(btnNewButton_2, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
+					.addGap(108))
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(24)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblId)
+						.addComponent(idTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNewLabel_4)
+						.addComponent(typeidTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(31)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_1)
+						.addComponent(bookname_dTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNewLabel_2)
+						.addComponent(authorTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(56)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(label)
+						.addComponent(priceTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNewLabel_3)
+						.addComponent(storageTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(41)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnNewButton_1)
+						.addComponent(btnNewButton_2))
+					.addContainerGap(43, Short.MAX_VALUE))
+		);
+		panel.setLayout(gl_panel);
+		
+		BookInfoTable = new JTable();
+		BookInfoTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				BookInfoTableMousePressed(e);
+			}
+		});
+		BookInfoTable.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"ID", "\u7C7B\u578BID", "\u4E66\u540D", "\u4F5C\u8005", "ISBN", "\u4EF7\u683C", "\u5E93\u5B58\u6570\u91CF"
+			}
+		));
+		scrollPane.setViewportView(BookInfoTable);
+		getContentPane().setLayout(groupLayout);
+		this.fillTable(new BookInfo());
+
+	}
+	private void BookInfoDeleteActionPerformed(ActionEvent evt) {
+		String id=idTxt.getText();
+		if(StringUtil.isEmpty(id)){
+			JOptionPane.showMessageDialog(null, "请选择要删除的记录");
+			return;
+		}
+		int del=JOptionPane.showConfirmDialog(null, "确定要删除该条记录吗？");
+		if(del==0){
+			Connection con=null;
+			try{
+				con=dbutil.getcon();
+				int DelNum=bookmanagedao.deletebook(con, id);
+				if(DelNum==1){
+					JOptionPane.showMessageDialog(null, "删除成功！");
+					this.ResetValue();
+					this.fillTable(new BookInfo());	
+				}else{
+					JOptionPane.showMessageDialog(null, "删除失败！");
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally{
+				try {
+					dbutil.close(con);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private void BookInfoUpdateActionPerformed(ActionEvent evt) {
+		String id=idTxt.getText();
+		String typeid=typeidTxt.getText();
+		String bookname=bookname_dTxt.getText();
+		String author=authorTxt.getText();
+		String price=priceTxt.getText();
+		String storage=storageTxt.getText();
+		if(StringUtil.isEmpty(id)){
+			JOptionPane.showMessageDialog(null, "请选择要修改的记录");
+			return;
+		}
+		if(StringUtil.isEmpty(bookname)){
+			JOptionPane.showMessageDialog(null, "图书名称不能为空");
+			return;
+		}
+		BookInfo book=new BookInfo(Integer.parseInt(id),Integer.parseInt(typeid),bookname,author,Float.parseFloat(price),Integer.parseInt(storage));
+		Connection con=null;
+		try{
+			con=dbutil.getcon();
+			int ModifyNum=bookmanagedao.updatebook(con, book);
+			if(ModifyNum==1){
+				JOptionPane.showMessageDialog(null, "修改成功！");
+				this.ResetValue();
+				this.fillTable(new BookInfo());
+			}else{
+				JOptionPane.showMessageDialog(null, "修改失败！");
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			try {
+				dbutil.close(con);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
+	private void BookInfoTableMousePressed(MouseEvent evt) {
+		int row=BookInfoTable.getSelectedRow();
+		idTxt.setText((String)BookInfoTable.getValueAt(row, 0));
+		typeidTxt.setText((String)BookInfoTable.getValueAt(row, 1));
+		bookname_dTxt.setText((String)BookInfoTable.getValueAt(row, 2));
+		authorTxt.setText((String)BookInfoTable.getValueAt(row, 3));
+		priceTxt.setText((String)BookInfoTable.getValueAt(row, 5));
+		storageTxt.setText((String)BookInfoTable.getValueAt(row, 6));
+	}
+
+	private void BookSearchActionPerformed(ActionEvent evt) {
+		String IAD_BookName=this.IAD_BookNameTxt.getText();
+		BookInfo searchbook=new BookInfo();
+		searchbook.setBookname(IAD_BookName);
+		this.fillTable(searchbook);
+	}
+
+	private void fillTable(BookInfo book){
+		DefaultTableModel dtm=  (DefaultTableModel) BookInfoTable.getModel();
+		dtm.setRowCount(0);
+		Connection con=null;
+		try {
+			con=dbutil.getcon();
+			ResultSet rs=bookmanagedao.list(con, book);
+			while(rs.next()){
+				Vector v=new Vector();
+				v.add(rs.getString("id"));
+				v.add(rs.getString("typeid"));
+				v.add(rs.getString("bookname"));
+				v.add(rs.getString("author"));
+				v.add(rs.getString("isbn"));
+				v.add(rs.getString("price"));
+				v.add(rs.getString("storage"));
+				dtm.addRow(v);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				dbutil.close(con);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	private void ResetValue(){
+		this.idTxt.setText("");
+		this.typeidTxt.setText("");
+		this.bookname_dTxt.setText("");
+		this.authorTxt.setText("");
+		this.priceTxt.setText("");
+		this.storageTxt.setText("");
+	}
+}

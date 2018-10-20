@@ -1,0 +1,46 @@
+package array_test;
+
+public class charco {
+	public static boolean charcon(char[] cha, char targetValue) { 
+		for(int i = 0; i<cha.length; i++) {
+			if(cha[i] == targetValue) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static void main(String[] args) {
+		
+		Scanner scan = new Scanner(System.in);
+        System.out.println("请输入字符串");
+        if (scan.hasNext()) {
+            String str = scan.next();
+            System.out.println("输入的字符串为：" + str);   //获取字符串完毕
+            char[] strchar = new char[str.length()];
+            int [] strcharnum = new int[str.length()];
+            char empty = 0;
+            for(int i = 0,k = 0; i < str.length();i++) {       //遍历字符串
+            	if(!charcon(strchar, str.charAt(i)))     //如果没有第i个元素
+            	{
+                	strchar[k] = str.charAt(i);
+                	int count = 1;
+                	for(int j = i+1; j < str.length(); j++) {
+                		if(strchar[k]==str.charAt(j)) {
+                			count++;
+                		}
+                	}
+                	strcharnum[k]=count;
+                	k++;
+            	}
+            }
+
+
+            for(int i=0;i<strchar.length;i++) {
+            	if(strchar[i]==empty) return;
+            	System.out.println(strchar[i] + ": " + strcharnum[i]);
+            }
+        }
+        scan.close();
+	}
+}

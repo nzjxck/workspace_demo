@@ -1,0 +1,22 @@
+package array_test;
+
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Scanner;
+
+public class CharCounter {
+	public static boolean have(char[] cha ,char c) {
+		for (int i=0;i<cha.length;i++) {
+			if(cha[i]==c) return true;
+		}
+		return false;
+		
+	}
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+		String temp = scanner.nextLine();
+		System.out.println(temp);
+		char [] array = temp.toCharArray();
+		System.out.println(array);
+}
+}

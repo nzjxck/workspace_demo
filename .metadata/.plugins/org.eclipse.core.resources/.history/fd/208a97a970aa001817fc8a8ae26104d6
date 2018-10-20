@@ -1,0 +1,19 @@
+package file;
+
+import java.io.File;
+import java.io.IOException;
+
+public class TestFile {
+	public static void main(String[] args) {
+		File f1 = new File("d:/新文件.txt");
+//		try {
+//			f1.createNewFile();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+		File f2 =new File("d:/新文件夹/aa/bb/cc");
+		//f2.mkdirs();//如果这里使用mkdir则会创建失败，因为前面的目录不存在的话就不会创建。
+		System.out.println(f1.isFile());
+		System.out.println(f2.isDirectory());
+	}
+}

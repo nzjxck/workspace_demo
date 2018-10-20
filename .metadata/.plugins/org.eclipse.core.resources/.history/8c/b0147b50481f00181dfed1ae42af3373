@@ -1,0 +1,27 @@
+package chap03;
+
+public class FangFa {
+	int add(int a,int b){
+		return a+b;
+	}
+	//方法的重载  1.方法的名字相同但参数不同 算作重载
+	int add(int a,int b,int c){
+		return a+b+c;
+	}
+	int add(int a,String b){
+		return a+Integer.parseInt(b);//将String类型转换成int类型
+	}
+	/**
+	 * 参数类型个数一样，但是返回值类型不同，不算方法的重载
+	 * @param args
+	 */
+	/*long add(int a,int b){
+		return a+b;
+	}*/
+	public static void main(String[] args) {
+		FangFa01 fangfa=new FangFa01();//类下新建一个对象将其实例化
+		System.out.println(fangfa.add(2, 3));
+		System.out.println(fangfa.add(1, 6, 8));
+		System.out.println(fangfa.add(5, "8"));
+	}
+}

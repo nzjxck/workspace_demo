@@ -1,0 +1,25 @@
+/**
+ * 递归方法的练习（斐波那契数列）
+ */
+
+package chap03;
+
+import java.util.Scanner;
+
+public class FangFa04 {
+	 static long DiGui(int n){
+		if(n==1||n==2){
+			return 1;
+		}
+		return DiGui(n-1)+DiGui(n-2);
+	}
+	public static void main(String[] args) {
+		System.out.println("需要输出几个斐波那契数？");
+		Scanner sc=new Scanner(System.in);
+		sc.close();
+		int k=sc.nextInt();
+		for(int n=1;n<=k;n++){
+		System.out.print(FangFa04.DiGui(n)+" ");
+	}
+	}
+}
